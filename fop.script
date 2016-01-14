@@ -1,0 +1,35 @@
+#!/bin/sh
+# 
+# Fop script
+# JPackage Project <http://www.jpackage.org/>
+
+# Source functions library
+if [ -f /usr/share/java-utils/java-functions ] ; then 
+  . /usr/share/java-utils/java-functions
+else
+  echo "Can't find functions library, aborting"
+  exit 1
+fi
+
+# Source system prefs
+if [ -f /etc/fop.conf ] ; then 
+  . /etc/fop.conf
+fi
+
+# Source user prefs
+if [ -f $HOME/.foprc ] ; then 
+  . $HOME/.foprc
+fi
+
+# Configuration
+MAIN_CLASS=org.apache.fop.cli.Main
+# Set parameters
+set_jvm
+set_classpath commons-io batik-all avalon-framework-api \
+  avalon-framework-impl xmlgraphics-commons xml-commons-apis-ext \
+  commons-logging fop
+set_flags $BASE_FLAGS
+set_options $BASE_OPTIONS
+
+# Let's start
+run "$@"
