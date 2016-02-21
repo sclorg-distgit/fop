@@ -5,7 +5,7 @@
 Name:		%{?scl_prefix}%{pkg_name}
 Summary:	XSL-driven print formatter
 Version:	1.1
-Release:	6.12%{?dist}
+Release:	6.13%{?dist}
 # ASL 1.1:
 # several files in src/java/org/apache/fop/render/awt/viewer/resources/
 # rest is ASL 2.0
@@ -23,25 +23,25 @@ Patch1:		%{pkg_name}-Use-sRGB.icc-color-profile-from-icc-profiles-openicc.patch
 
 BuildArch:	noarch
 
-Requires:	maven30-xmlgraphics-commons >= 1.5
-Requires:	maven30-avalon-framework >= 4.1.4
+Requires:	%{?scl_prefix}xmlgraphics-commons >= 1.5
+Requires:	%{?scl_prefix}avalon-framework >= 4.1.4
 Requires:	%{?scl_prefix_java_common}batik >= 1.7
 Requires:	%{?scl_prefix_java_common}xalan-j2 >= 2.7.0
 Requires:	%{?scl_prefix_java_common}xml-commons-apis >= 1.3.04
 Requires:	%{?scl_prefix_java_common}jakarta-commons-httpclient
 Requires:	%{?scl_prefix_java_common}apache-commons-io >= 1.2
 Requires:	%{?scl_prefix_java_common}apache-commons-logging >= 1.0.4
-Requires:	maven30-icc-profiles-openicc
+Requires:	%{?scl_prefix}icc-profiles-openicc
 
 BuildRequires:	%{?scl_prefix_java_common}ant
 BuildRequires:	%{?scl_prefix_java_common}apache-commons-logging
 BuildRequires:	%{?scl_prefix_java_common}apache-commons-io
-BuildRequires:	maven30-avalon-framework
-BuildRequires:	maven30-xmlgraphics-commons >= 1.5
+BuildRequires:	%{?scl_prefix}avalon-framework
+BuildRequires:	%{?scl_prefix}xmlgraphics-commons >= 1.5
 BuildRequires:	%{?scl_prefix_java_common}batik
 BuildRequires:	%{?scl_prefix_java_common}tomcat-servlet-3.0-api
 BuildRequires:	%{?scl_prefix_java_common}qdox
-BuildRequires:	maven30-xmlunit
+BuildRequires:	%{?scl_prefix}xmlunit
 BuildRequires:	zip
 BuildRequires:	%{?scl_prefix_java_common}junit
 
@@ -61,7 +61,7 @@ Javadoc for %{pkg_name}.
 
 %prep
 %setup -q -n %{pkg_name}-%{version}
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 %patch0 -p0
 %patch1 -p1
@@ -75,7 +75,7 @@ ln -s %{_javadir_java_common}/qdox.jar lib/build/qdox.jar
 %{?scl:EOF}
 
 %build
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 #qdox intentionally left off classpath -- see https://issues.apache.org/bugzilla/show_bug.cgi?id=50575
 export CLASSPATH=$(build-classpath apache-commons-logging apache-commons-io xmlgraphics-commons batik-all avalon-framework-api avalon-framework-impl tomcat-servlet-3.0-api batik/batik-svg-dom xml-commons-apis xml-commons-apis-ext objectweb-asm/asm-all xmlunit)
@@ -83,7 +83,7 @@ ant jar-main transcoder-pkg javadocs
 %{?scl:EOF}
 
 %install
-%{?scl:scl enable maven30 %{scl} - <<"EOF"}
+%{?scl:scl enable %{scl} - <<"EOF"}
 set -e -x
 # inject OSGi manifests
 install -d -m 755 META-INF
@@ -126,6 +126,9 @@ install -p -m 644 %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-%{pkg_name}.pom
 
 
 %changelog
+* Mon Jan 11 2016 Michal Srb <msrb@redhat.com> - 1.1-6.13
+- maven33 rebuild #2
+
 * Sat Jan 09 2016 Michal Srb <msrb@redhat.com> - 1.1-6.12
 - maven33 rebuild
 
