@@ -30,7 +30,7 @@ index 60fea88..e041344 100644
 -        InputStream in = PDFDocument.class.getResourceAsStream("sRGB Color Space Profile.icm");
 +        InputStream in;
 +        try {
-+            in = new FileInputStream("/opt/rh/maven30/root/usr/share/color/icc/OpenICC/sRGB.icc");
++            in = new FileInputStream("/opt/rh/rh-maven33/root/usr/share/color/icc/OpenICC/sRGB.icc");
 +        } catch (FileNotFoundException e) {
 +            in = null;
 +        }
