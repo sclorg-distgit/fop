@@ -5,7 +5,7 @@
 Name:		%{?scl_prefix}%{pkg_name}
 Summary:	XSL-driven print formatter
 Version:	1.1
-Release:	6.14%{?dist}
+Release:	6.15%{?dist}
 # ASL 1.1:
 # several files in src/java/org/apache/fop/render/awt/viewer/resources/
 # rest is ASL 2.0
@@ -126,6 +126,9 @@ install -p -m 644 %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-%{pkg_name}.pom
 
 
 %changelog
+* Mon Feb 08 2016 Michal Srb <msrb@redhat.com> - 1.1-6.15
+- Fix BR on maven-local & co.
+
 * Fri Jan 29 2016 Michal Srb <msrb@redhat.com> - 1.1-6.14
 - Adapt patch to rh-maven33 collection
 
